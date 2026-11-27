@@ -1,0 +1,856 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#e31837">
+<meta name="description" content="SK Bajaj Nautanwa - Explore Bajaj motorcycles, compare bikes, calculate EMI and contact our showroom.">
+<title>SK Bajaj | Nautanwa Maharajganj</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --red:#e31837;
+  --dark:#111111;
+  --muted:#777;
+  --light:#f5f5f5;
+  --white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,Arial,sans-serif;
+  color:var(--dark);
+  background:#fff;
+  overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.container{width:min(1180px,92%);margin:auto}
+.section{padding:90px 0}
+.section-tag{
+  color:var(--red);font-weight:800;letter-spacing:3px;
+  text-transform:uppercase;font-size:12px;margin-bottom:12px
+}
+.section-title{
+  font-family:"Barlow Condensed",sans-serif;
+  font-size:clamp(38px,5vw,58px);
+  line-height:1;text-transform:uppercase;font-weight:900
+}
+.section-title span{color:var(--red)}
+.section-desc{color:var(--muted);line-height:1.8;margin-top:14px;max-width:600px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  border:0;border-radius:5px;padding:14px 23px;font-weight:800;
+  transition:.25s;letter-spacing:.3px
+}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:#b90e28;transform:translateY(-3px);box-shadow:0 10px 25px #e318373d}
+.btn-dark{background:#111;color:#fff}
+.btn-dark:hover{background:var(--red);transform:translateY(-3px)}
+.btn-outline{border:1px solid #ddd;background:#fff;color:#111}
+.btn-outline:hover{border-color:var(--red);color:var(--red)}
+/* Loader */
+.loader{
+ position:fixed;inset:0;background:#111;z-index:9999;
+ display:flex;align-items:center;justify-content:center;
+ color:white;flex-direction:column;gap:15px;
+ animation:loaderOut .6s ease 1.4s forwards;
+}
+.loader-logo{font-family:"Barlow Condensed";font-size:55px;font-weight:900}
+.loader-logo span{color:var(--red)}
+.loader-line{width:130px;height:3px;background:#444;overflow:hidden}
+.loader-line:after{content:"";display:block;width:50%;height:100%;background:var(--red);animation:load 1s infinite}
+@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(200%)}}
+@keyframes loaderOut{to{opacity:0;visibility:hidden}}
+/* Header */
+.topbar{background:#111;color:#ddd;font-size:12px;padding:9px 0}
+.topbar-inner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.topbar a{color:#fff}
+.navbar{
+ position:sticky;top:0;z-index:1000;background:#fff;
+ box-shadow:0 4px 22px #0000000d
+}
+.nav-inner{height:78px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.logo{
+ font-family:"Barlow Condensed",sans-serif;font-size:35px;
+ font-weight:900;line-height:.8;letter-spacing:-1px
+}
+.logo span{color:var(--red)}
+.logo small{display:block;font:700 9px Inter;letter-spacing:4px;margin-top:8px}
+.nav-links{display:flex;align-items:center;gap:27px}
+.nav-links a{font-size:13px;font-weight:700;transition:.2s}
+.nav-links a:hover{color:var(--red)}
+.menu-btn{display:none;background:none;border:0;font-size:28px}
+.nav-cta{padding:12px 18px;font-size:12px}
+/* Hero */
+.hero{
+ min-height:650px;display:flex;align-items:center;position:relative;
+ color:white;background:#111;overflow:hidden
+}
+.hero-bg{
+ position:absolute;inset:0;
+ background:
+ linear-gradient(90deg,#080808 0%,#080808e8 35%,#08080866 75%,#08080866 100%),
+ url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=2000&q=85") center/cover;
+ transform:scale(1.04);animation:heroZoom 12s ease-in-out infinite alternate
+}
+@keyframes heroZoom{to{transform:scale(1.12)}}
+.hero-content{position:relative;z-index:2;padding:100px 0;max-width:680px}
+.hero-kicker{color:#ff536b;font-size:13px;font-weight:800;letter-spacing:4px;margin-bottom:20px}
+.hero h1{
+ font-family:"Barlow Condensed",sans-serif;font-size:clamp(58px,9vw,108px);
+ line-height:.88;font-weight:900;text-transform:uppercase;letter-spacing:-2px
+}
+.hero h1 span{color:var(--red)}
+.hero p{color:#ddd;line-height:1.8;max-width:520px;margin:25px 0 30px;font-size:15px}
+.hero-actions{display:flex;gap:13px;flex-wrap:wrap}
+.hero-note{margin-top:38px;color:#bbb;font-size:12px;letter-spacing:1px}
+.hero-note strong{color:#fff}
+/* Moving strip */
+.marquee{background:var(--red);color:white;overflow:hidden;padding:13px 0;white-space:nowrap}
+.marquee-track{display:inline-block;animation:marquee 25s linear infinite;font-weight:900;letter-spacing:2px}
+.marquee-track span{padding:0 35px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;box-shadow:0 15px 50px #0000000b;margin-top:-35px;position:relative;z-index:3}
+.stat{text-align:center;padding:28px 10px;border-right:1px solid #eee}
+.stat:last-child{border:0}
+.stat strong{font-family:"Barlow Condensed";font-size:38px;color:var(--red);display:block}
+.stat span{font-size:11px;font-weight:800;letter-spacing:1px;color:#666;text-transform:uppercase}
+/* Bikes */
+.bikes-section{background:#f8f8f8}
+.bike-toolbar{display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap;margin:32px 0}
+.search-box{display:flex;align-items:center;border:1px solid #ddd;background:white;border-radius:5px;padding:0 14px;min-width:260px}
+.search-box input{border:0;outline:0;padding:13px 8px;width:100%;background:transparent}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filter-btn{border:1px solid #ddd;background:#fff;padding:10px 15px;border-radius:4px;font-size:12px;font-weight:800}
+.filter-btn.active,.filter-btn:hover{background:var(--red);color:white;border-color:var(--red)}
+.bike-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.bike-card{
+ background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden;
+ transition:.35s;position:relative
+}
+.bike-card:hover{transform:translateY(-9px);box-shadow:0 18px 40px #00000012}
+.bike-photo{height:245px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.bike-photo img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .5s}
+.bike-card:hover .bike-photo img{transform:scale(1.07)}
+.bike-category{position:absolute;top:14px;left:14px;background:var(--red);color:white;padding:6px 10px;font-size:10px;font-weight:800;letter-spacing:1px;border-radius:3px}
+.bike-info{padding:21px}
+.bike-info h3{font-family:"Barlow Condensed";font-size:29px;text-transform:uppercase}
+.bike-info p{font-size:12px;color:#777;margin:7px 0 17px;line-height:1.6}
+.bike-actions{display:flex;gap:8px;flex-wrap:wrap}
+.bike-actions .btn{font-size:11px;padding:11px 13px;flex:1}
+.no-results{grid-column:1/-1;text-align:center;padding:45px;color:#777}
+/* Compare */
+.compare-wrap{margin-top:35px;background:#fff;border:1px solid #eee;padding:25px;border-radius:8px}
+.compare-wrap h3{font-family:"Barlow Condensed";font-size:28px;margin-bottom:15px}
+.compare-selects{display:flex;gap:12px;flex-wrap:wrap}
+.compare-selects select{flex:1;min-width:180px;padding:13px;border:1px solid #ddd;border-radius:4px;background:#fff}
+.compare-output{margin-top:20px;line-height:1.8;color:#555;font-size:14px}
+/* EMI */
+.emi-section{background:#111;color:#fff;position:relative;overflow:hidden}
+.emi-section:after{content:"";position:absolute;width:400px;height:400px;border:70px solid #e3183714;border-radius:50%;right:-120px;top:-100px}
+.emi-layout{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center;position:relative;z-index:1}
+.emi-section .section-desc{color:#aaa}
+.emi-panel{background:#fff;color:#111;padding:30px;border-radius:9px}
+.emi-panel label{font-size:12px;font-weight:800;display:block;margin-bottom:10px}
+.emi-field{margin-bottom:23px}
+.emi-field input[type=range]{width:100%;accent-color:var(--red)}
+.emi-value{display:flex;justify-content:space-between;font-weight:800;font-size:14px;margin-bottom:8px}
+.emi-result{background:#111;color:#fff;padding:22px;border-radius:6px}
+.emi-result small{color:#aaa;font-size:11px;letter-spacing:1px}
+.emi-result strong{display:block;font-size:35px;color:#ff405b;margin:7px 0}
+.emi-result p{font-size:12px;color:#ccc;line-height:1.8}
+/* Benefits */
+.benefit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px}
+.benefit{padding:28px 22px;border:1px solid #eee;border-radius:7px;transition:.3s}
+.benefit:hover{border-color:var(--red);transform:translateY(-6px)}
+.benefit-icon{width:48px;height:48px;background:#fff0f2;color:var(--red);display:grid;place-items:center;font-size:23px;border-radius:7px;margin-bottom:18px}
+.benefit h3{font-size:15px;margin-bottom:10px}
+.benefit p{font-size:12px;color:#777;line-height:1.8}
+/* Contact */
+.contact-section{background:#f7f7f7}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px;margin-top:35px}
+.contact-card{background:#fff;padding:30px;border-radius:8px}
+.contact-item{display:flex;gap:15px;margin:22px 0;align-items:flex-start}
+.contact-icon{width:43px;height:43px;flex-shrink:0;background:#fff0f2;color:var(--red);display:grid;place-items:center;border-radius:6px;font-size:19px}
+.contact-item h4{font-size:13px;margin-bottom:5px}
+.contact-item p{font-size:13px;color:#777;line-height:1.7}
+.map-frame{width:100%;height:100%;min-height:360px;border:0;border-radius:8px}
+/* CTA */
+.cta{background:var(--red);color:#fff;padding:55px 0}
+.cta-inner{display:flex;justify-content:space-between;align-items:center;gap:25px;flex-wrap:wrap}
+.cta h2{font-family:"Barlow Condensed";font-size:clamp(32px,5vw,48px);text-transform:uppercase}
+.cta p{font-size:13px;color:#ffe2e6;margin-top:8px}
+.cta .btn{background:#fff;color:#111}
+.cta .btn:hover{background:#111;color:#fff}
+/* Footer */
+footer{background:#101010;color:#fff;padding:45px 0 20px}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:35px}
+.footer-about p{font-size:12px;color:#aaa;line-height:1.9;margin-top:18px;max-width:340px}
+footer h4{font-size:13px;margin-bottom:17px}
+.footer-links{display:grid;gap:12px}
+.footer-links a{font-size:12px;color:#aaa}
+.footer-links a:hover{color:#ff536b}
+.footer-bottom{border-top:1px solid #333;padding-top:20px;color:#888;font-size:11px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.disclaimer{color:#777;font-size:10px;line-height:1.7;margin-top:15px}
+/* Floating */
+.float-actions{position:fixed;right:18px;bottom:20px;z-index:900;display:flex;flex-direction:column;gap:10px}
+.float-btn{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:white;font-size:23px;box-shadow:0 5px 18px #0003;transition:.25s}
+.float-btn:hover{transform:scale(1.1)}
+.whatsapp{background:#20c45a}
+.call{background:var(--red)}
+/* Reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:900px){
+ .nav-links{gap:14px}
+ .nav-links a{font-size:11px}
+ .bike-grid{grid-template-columns:repeat(2,1fr)}
+ .benefit-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+ .topbar-inner{justify-content:center;text-align:center}
+ .nav-inner{height:68px}
+ .menu-btn{display:block}
+ .nav-links{
+  display:none;position:absolute;top:68px;left:0;width:100%;background:white;
+  padding:20px 5%;box-shadow:0 12px 18px #00000012;flex-direction:column;align-items:flex-start
+ }
+ .nav-links.open{display:flex}
+ .nav-cta{display:none}
+ .hero{min-height:590px}
+ .hero-content{padding:85px 0}
+ .hero-bg{background-position:60% center}
+ .stats{grid-template-columns:repeat(2,1fr);margin-top:0}
+ .stat:nth-child(2){border-right:0}
+ .stat:nth-child(-n+2){border-bottom:1px solid #eee}
+ .section{padding:65px 0}
+ .bike-grid{grid-template-columns:1fr}
+ .bike-photo{height:250px}
+ .emi-layout,.contact-grid{grid-template-columns:1fr}
+ .benefit-grid{grid-template-columns:repeat(2,1fr)}
+ .footer-top{grid-template-columns:1fr 1fr}
+ .footer-about{grid-column:1/-1}
+ .map-frame{min-height:300px}
+}
+@media(max-width:420px){
+ .benefit-grid{grid-template-columns:1fr}
+ .footer-top{grid-template-columns:1fr}
+ .footer-about{grid-column:auto}
+ .hero h1{font-size:59px}
+ .hero-actions .btn{width:100%}
+ .bike-toolbar{align-items:stretch}
+ .search-box{width:100%;min-width:0}
+}
+
+/* Full bike details modal */
+.details-btn{width:100%;margin-top:10px;background:#111;color:#fff;border:0;border-radius:5px;padding:12px;font-weight:800;letter-spacing:.4px}
+.details-btn:hover{background:var(--red)}
+.details-modal{display:none;position:fixed;inset:0;z-index:5000;background:#000b;padding:18px;align-items:center;justify-content:center}
+.details-modal.open{display:flex}
+.details-box{background:#fff;border-radius:12px;width:min(760px,100%);max-height:90vh;overflow:auto;padding:25px;position:relative}
+.details-close{position:absolute;right:15px;top:12px;border:0;background:#111;color:#fff;border-radius:50%;width:36px;height:36px;font-size:22px}
+.details-box h2{font-family:'Barlow Condensed';font-size:36px;text-transform:uppercase;padding-right:42px}
+.details-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:20px 0}
+.detail-item{background:#f5f5f5;border-radius:7px;padding:12px}
+.detail-item small{display:block;color:#777;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.detail-item strong{display:block;margin-top:5px;font-size:14px}
+.details-note{font-size:12px;line-height:1.7;color:#777}
+@media(max-width:520px){.details-grid{grid-template-columns:1fr 1fr}.details-box{padding:20px 15px}}
+
+</style>
+</head>
+
+<body>
+
+<div class="loader">
+  <div class="loader-logo">SK <span>BAJAJ</span></div>
+  <div class="loader-line"></div>
+  <small>RIDE YOUR DREAM</small>
+</div>
+
+<div class="topbar">
+ <div class="container topbar-inner">
+  <span>📍 Nautanwa, Maharajganj, Uttar Pradesh</span>
+  <span>Call: <a href="tel:7388850355">7388850355</a> &nbsp; | &nbsp; WhatsApp available</span>
+ </div>
+</div>
+
+<header class="navbar">
+ <div class="container nav-inner">
+  <a href="#home" class="logo">SK <span>BAJAJ</span><small>RIDE YOUR DREAM</small></a>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+  <nav class="nav-links" id="navLinks">
+   <a href="#home">HOME</a>
+   <a href="#bikes">OUR BIKES</a>
+   <a href="#compare">COMPARE</a>
+   <a href="#emi">EMI</a>
+   <a href="#about">WHY US</a>
+   <a href="#contact">CONTACT</a>
+  </nav>
+  <a class="btn btn-red nav-cta" href="tel:7388850355">☎ CALL NOW</a>
+ </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+ <div class="hero-bg"></div>
+ <div class="container">
+  <div class="hero-content">
+   <div class="hero-kicker">WELCOME TO SK BAJAJ • NAUTANWA</div>
+   <h1>FEEL THE<br><span>POWER.</span><br>OWN THE ROAD.</h1>
+   <p>Discover the Bajaj motorcycle range at SK Bajaj, Nautanwa. Explore your favourite bikes, compare models and connect with our showroom team.</p>
+   <div class="hero-actions">
+    <a href="#bikes" class="btn btn-red">EXPLORE BIKES ↗</a>
+    <a href="https://wa.me/917388850355?text=Hello%20SK%20Bajaj%2C%20I%20want%20to%20know%20about%20your%20bikes." class="btn btn-outline" style="background:#ffffff12;color:white;border-color:#ffffff66">WHATSAPP US</a>
+   </div>
+   <div class="hero-note">YOUR LOCAL SHOWROOM &nbsp; • &nbsp; <strong>NAUTANWA, MAHARAJGANJ</strong></div>
+  </div>
+ </div>
+</section>
+
+<div class="marquee">
+ <div class="marquee-track">
+  <span>SK BAJAJ</span> ✦ <span>RIDE YOUR DREAM</span> ✦ <span>POWER YOUR JOURNEY</span> ✦ <span>NAUTANWA</span> ✦
+  <span>SK BAJAJ</span> ✦ <span>RIDE YOUR DREAM</span> ✦ <span>POWER YOUR JOURNEY</span> ✦ <span>NAUTANWA</span> ✦
+ </div>
+</div>
+
+<div class="container">
+ <div class="stats reveal">
+  <div class="stat"><strong>01</strong><span>Your Local Showroom</span></div>
+  <div class="stat"><strong>07+</strong><span>Featured Models</span></div>
+  <div class="stat"><strong>100%</strong><span>Customer Focus</span></div>
+  <div class="stat"><strong>SK</strong><span>Bajaj Experience</span></div>
+ </div>
+</div>
+
+<section class="section bikes-section" id="bikes">
+ <div class="container">
+  <div class="reveal">
+   <div class="section-tag">FIND YOUR RIDE</div>
+   <h2 class="section-title">EXPLORE THE <span>BAJAJ</span><br>COLLECTION</h2>
+   <p class="section-desc">Explore the Bajaj motorcycle and Chetak range available in our catalogue. Contact the showroom to confirm current availability, exact variant, colours and on-road prices.</p>
+  </div>
+
+  <div class="bike-toolbar reveal">
+   <div class="search-box">🔍 <input type="search" id="bikeSearch" placeholder="Search your favourite bike..."></div>
+   <div class="filters">
+    <button class="filter-btn active" data-filter="all">ALL BIKES</button>
+    <button class="filter-btn" data-filter="sports">SPORTS</button>
+    <button class="filter-btn" data-filter="commuter">COMMUTER</button>
+    <button class="filter-btn" data-filter="cruiser">CRUISER</button>
+   </div>
+  </div>
+
+  <div class="bike-grid" id="bikeGrid"></div>
+
+  <div class="compare-wrap reveal" id="compare">
+   <h3>⚡ COMPARE YOUR BIKES</h3>
+   <p style="font-size:12px;color:#777;margin-bottom:17px">Choose two models to compare them side by side.</p>
+   <div class="compare-selects">
+    <select id="bikeOne"><option value="">Select first bike</option></select>
+    <select id="bikeTwo"><option value="">Select second bike</option></select>
+    <button class="btn btn-red" id="compareBtn">COMPARE NOW</button>
+   </div>
+   <div class="compare-output" id="compareOutput">Your bike comparison will appear here.</div>
+  </div>
+ </div>
+</section>
+
+<section class="section emi-section" id="emi">
+ <div class="container emi-layout">
+  <div class="reveal">
+   <div class="section-tag">PLAN YOUR PURCHASE</div>
+   <h2 class="section-title">CALCULATE YOUR<br><span>BIKE EMI</span></h2>
+   <p class="section-desc">Get an estimated monthly EMI by adjusting the bike price, down payment, interest rate and loan duration.</p>
+   <p style="color:#aaa;font-size:12px;margin-top:20px;line-height:1.8">This calculator provides an indicative estimate only. Actual finance terms, processing fees and eligibility depend on the lender.</p>
+  </div>
+  <div class="emi-panel reveal">
+   <div class="emi-field">
+    <label>BIKE PRICE (₹)</label>
+    <div class="emi-value"><span>Bike price</span><strong id="priceText">₹1,50,000</strong></div>
+    <input type="range" id="price" min="50000" max="300000" step="5000" value="150000">
+   </div>
+   <div class="emi-field">
+    <label>DOWN PAYMENT (₹)</label>
+    <div class="emi-value"><span>Down payment</span><strong id="downText">₹30,000</strong></div>
+    <input type="range" id="down" min="10000" max="100000" step="5000" value="30000">
+   </div>
+   <div class="emi-field">
+    <label>INTEREST RATE (% PER YEAR)</label>
+    <div class="emi-value"><span>Interest</span><strong id="rateText">10%</strong></div>
+    <input type="range" id="rate" min="6" max="18" step=".5" value="10">
+   </div>
+   <div class="emi-field">
+    <label>LOAN DURATION</label>
+    <div class="emi-value"><span>Duration</span><strong id="monthsText">36 Months</strong></div>
+    <input type="range" id="months" min="12" max="60" step="6" value="36">
+   </div>
+   <div class="emi-result">
+    <small>ESTIMATED MONTHLY EMI</small>
+    <strong id="emiResult">₹3,872</strong>
+    <p id="loanSummary">Loan amount: ₹1,20,000<br>Total interest: —</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="about">
+ <div class="container">
+  <div class="reveal">
+   <div class="section-tag">THE SK BAJAJ EXPERIENCE</div>
+   <h2 class="section-title">MORE THAN JUST<br><span>A SHOWROOM.</span></h2>
+   <p class="section-desc">We want your bike-buying journey to be simple and convenient. Connect with our team for information about models, variants and purchase enquiries.</p>
+  </div>
+  <div class="benefit-grid">
+   <div class="benefit reveal"><div class="benefit-icon">🏍️</div><h3>Explore Models</h3><p>Explore different Bajaj motorcycle models and find a ride that suits your needs.</p></div>
+   <div class="benefit reveal"><div class="benefit-icon">🤝</div><h3>Personal Assistance</h3><p>Contact our showroom team for guidance about available models and variants.</p></div>
+   <div class="benefit reveal"><div class="benefit-icon">💳</div><h3>Finance Enquiry</h3><p>Ask our team about finance options, eligibility and applicable documentation.</p></div>
+   <div class="benefit reveal"><div class="benefit-icon">📍</div><h3>Local Showroom</h3><p>Find us in Nautanwa, Maharajganj, Uttar Pradesh.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="section contact-section" id="contact">
+ <div class="container">
+  <div class="reveal">
+   <div class="section-tag">GET IN TOUCH</div>
+   <h2 class="section-title">VISIT <span>SK BAJAJ</span></h2>
+   <p class="section-desc">Have a question about a bike? Call us, send a WhatsApp message or visit our showroom.</p>
+  </div>
+  <div class="contact-grid">
+   <div class="contact-card reveal">
+    <div class="contact-item">
+     <div class="contact-icon">📍</div>
+     <div><h4>SHOWROOM ADDRESS</h4><p>SK Bajaj, Nautanwa,<br>Maharajganj, Uttar Pradesh 273164, India</p></div>
+    </div>
+    <div class="contact-item">
+     <div class="contact-icon">☎</div>
+     <div><h4>CALL US</h4><p><a href="tel:7388850355">7388850355</a></p></div>
+    </div>
+    <div class="contact-item">
+     <div class="contact-icon">💬</div>
+     <div><h4>WHATSAPP</h4><p>+91 73888 50355</p></div>
+    </div>
+    <div class="contact-item">
+     <div class="contact-icon">🕒</div>
+     <div><h4>SHOWROOM HOURS</h4><p>Please call us to confirm today's opening hours.</p></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:25px">
+     <a class="btn btn-red" href="tel:7388850355">☎ CALL NOW</a>
+     <a class="btn btn-dark" target="_blank" rel="noopener" href="https://wa.me/917388850355?text=Hello%20SK%20Bajaj%2C%20I%20want%20to%20enquire%20about%20a%20bike.">WHATSAPP</a>
+    </div>
+   </div>
+   <iframe class="map-frame reveal" title="SK Bajaj Nautanwa map" loading="lazy" src="https://www.google.com/maps?q=SK%20Bajaj%20Nautanwa%20Maharajganj%20Uttar%20Pradesh%20273164&output=embed"></iframe>
+  </div>
+ </div>
+</section>
+
+<section class="cta">
+ <div class="container cta-inner">
+  <div><h2>READY FOR YOUR NEXT RIDE?</h2><p>Connect with SK Bajaj, Nautanwa today.</p></div>
+  <a class="btn" href="https://wa.me/917388850355?text=Hello%20SK%20Bajaj%2C%20please%20contact%20me%20about%20a%20bike.">ENQUIRE ON WHATSAPP ↗</a>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="container">
+  <div class="footer-top">
+   <div class="footer-about">
+    <a href="#home" class="logo">SK <span>BAJAJ</span><small style="color:#aaa">RIDE YOUR DREAM</small></a>
+    <p>Your local Bajaj motorcycle showroom in Nautanwa, Maharajganj, Uttar Pradesh. Contact us for model, variant and purchase enquiries.</p>
+   </div>
+   <div><h4>QUICK LINKS</h4><div class="footer-links">
+    <a href="#home">Home</a><a href="#bikes">Explore Bikes</a><a href="#compare">Compare Bikes</a><a href="#emi">EMI Calculator</a><a href="#contact">Contact Us</a>
+   </div></div>
+   <div><h4>CONTACT</h4><div class="footer-links">
+    <a href="tel:7388850355">7388850355</a>
+    <a href="https://wa.me/917388850355">WhatsApp Us</a>
+    <a href="#contact">Nautanwa, Maharajganj</a>
+   </div></div>
+  </div>
+  <div class="footer-bottom">
+   <span>© <span id="year"></span> SK Bajaj. All rights reserved.</span>
+   <span>Designed for SK Bajaj, Nautanwa.</span>
+  </div>
+  <p class="disclaimer">Model names and product photographs are used for identification and informational purposes. Product images are loaded from external sources and require an internet connection. Prices, specifications, colours, offers and availability may change. Please confirm details with the showroom. This is an independent showroom website and is not represented as the official Bajaj Auto website.</p>
+ </div>
+</footer>
+
+<div class="float-actions">
+ <a class="float-btn whatsapp" href="https://wa.me/917388850355?text=Hello%20SK%20Bajaj" target="_blank" rel="noopener" aria-label="WhatsApp">◉</a>
+ <a class="float-btn call" href="tel:7388850355" aria-label="Call">☎</a>
+</div>
+
+
+<div class="details-modal" id="detailsModal" role="dialog" aria-modal="true" aria-labelledby="detailsTitle">
+ <div class="details-box">
+  <button class="details-close" id="detailsClose" aria-label="Close">×</button>
+  <div class="section-tag">BAJAJ SPECIFICATIONS</div>
+  <h2 id="detailsTitle">Bike details</h2>
+  <div class="details-grid" id="detailsGrid"></div>
+  <p class="details-note" id="detailsNote"></p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+   <a class="btn btn-red" id="detailsWhatsApp" href="https://wa.me/917388850355" target="_blank" rel="noopener">WHATSAPP ENQUIRY</a>
+   <a class="btn btn-outline" href="tel:7388850355">CALL SHOWROOM</a>
+  </div>
+ </div>
+</div>
+
+<script>
+const bikes = [
+ {
+  name:'Chetak C3503',category:'commuter',type:'Electric Scooter',
+  image:'https://www.varunbajaj.com/uploads/product_colours/varun-chetak-3503-black.webp',
+  description:'Electric Scooter variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 150 Twin Disc',category:'sports',type:'Classic Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-156092-pulsar-150-sd-red01',
+  description:'Classic Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 125 CF Single Seat',category:'commuter',type:'Commuter Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-193116-pulsar-125-standard-single-silver-aqua-01',
+  description:'Commuter Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 125 Single Seat Neon',category:'commuter',type:'Commuter Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-193116-pulsar-125-standard-single-silver-aqua-01',
+  description:'Commuter Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 220 F LED',category:'sports',type:'Classic Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-139901-pulsar-rs200-black-01',
+  description:'Classic Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar RS 200',category:'sports',type:'Full-Faired Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-139901-pulsar-rs200-black-01',
+  description:'Full-Faired Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar NS 160 Dual Channel',category:'sports',type:'Naked Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-139602-ns160-dc-usd-white-01',
+  description:'Naked Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar NS 125 Disc With Ride',category:'sports',type:'Naked Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-136063-ns125-led-bt-abs-orange-01',
+  description:'Naked Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Freedom 125 NG04 Disc LED',category:'commuter',type:'CNG Motorcycle',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-154558-freedom-disc-led-grey-01',
+  description:'CNG Motorcycle variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Platina 110 ES Drum NXT',category:'commuter',type:'Daily Commuter',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-169831-platina-110-black-red-01',
+  description:'Daily Commuter variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Platina 100 ES CBS',category:'commuter',type:'Daily Commuter',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-169911-platina-100-red-01',
+  description:'Daily Commuter variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar NS 200 Dual Channel',category:'sports',type:'Naked Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-188056-ns200-premium-nardo-grey-01',
+  description:'Naked Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar P 150 SD Next',category:'sports',type:'Classic Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-156092-pulsar-150-sd-red01',
+  description:'Classic Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 160 N',category:'sports',type:'Naked Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-139602-ns160-dc-usd-white-01',
+  description:'Naked Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar N250 UG',category:'sports',type:'Street Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-188515-n250ss-pearl-metallic-white-01',
+  description:'Street Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'N160 SS USD Split Seat',category:'sports',type:'Street Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-112496-ss-usd-split-seat-black-01',
+  description:'Street Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'N160 S USD Single Seat',category:'sports',type:'Street Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-112496-ss-usd-split-seat-black-01',
+  description:'Street Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar N125 Disc',category:'sports',type:'Street Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-136063-ns125-led-bt-abs-orange-01',
+  description:'Street Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar N160 SD',category:'sports',type:'Street Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-112496-ss-usd-split-seat-black-01',
+  description:'Street Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar N160 TD',category:'sports',type:'Street Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-112496-ss-usd-split-seat-black-01',
+  description:'Street Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 125 Premium Split Seat',category:'commuter',type:'Commuter Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-193116-pulsar-125-standard-single-silver-aqua-01',
+  description:'Commuter Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 125 STD Single Seat',category:'commuter',type:'Commuter Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-193116-pulsar-125-standard-single-silver-aqua-01',
+  description:'Commuter Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 125 STD Split Seat',category:'commuter',type:'Commuter Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-193116-pulsar-125-standard-single-silver-aqua-01',
+  description:'Commuter Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 125 Single Seat',category:'commuter',type:'Commuter Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-193116-pulsar-125-standard-single-silver-aqua-01',
+  description:'Commuter Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 160 N USD Single Seat',category:'sports',type:'Naked Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-139602-ns160-dc-usd-white-01',
+  description:'Naked Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 150 TD Single Seat',category:'sports',type:'Classic Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-156092-pulsar-150-sd-red01',
+  description:'Classic Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 150 TD Split Seat',category:'sports',type:'Classic Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-156092-pulsar-150-sd-red01',
+  description:'Classic Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar NS 200',category:'sports',type:'Naked Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-188056-ns200-premium-nardo-grey-01',
+  description:'Naked Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar NS 125 UG MID',category:'sports',type:'Naked Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-136063-ns125-led-bt-abs-orange-01',
+  description:'Naked Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar 150 SD Single Seat',category:'sports',type:'Classic Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-156092-pulsar-150-sd-red01',
+  description:'Classic Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Pulsar N250 SS',category:'sports',type:'Street Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-188515-n250ss-pearl-metallic-white-01',
+  description:'Street Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'Dominar 400',category:'sports',type:'Touring Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-147113-dominar-400-black-01',
+  description:'Touring Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ },
+ {
+  name:'NS 400',category:'sports',type:'Naked Sports',
+  image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-140493-ns400z-red-01',
+  description:'Naked Sports variant. Contact SK Bajaj, Nautanwa to confirm availability, colour and exact variant details.'
+ }
+ ,{name:'Pulsar NS200 2026 ETB',category:'sports',type:'2026 New Launch',image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-195291-ns200',description:'2026 update: ETB ride modes, traction control, 5-inch TFT with Google Maps mirroring and Sports Shifter.'}
+ ,{name:'Pulsar N250 SS 2026 4V',category:'sports',type:'2026 New Launch',image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-195289-n250',description:'2026 update: 4-valve engine, 5-inch TFT with Google Maps mirroring, ETB ride modes and six-speed gearbox.'}
+ ,{name:'Pulsar N160 S 2026 4V',category:'sports',type:'2026 New Launch',image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-112496-ss-usd-split-seat-black-01',description:'2026 new N160 S family with 165cc 4-valve engine, ETB ride modes and 5-inch TFT console.'}
+ ,{name:'Pulsar N160 SS 2026 4V',category:'sports',type:'2026 New Launch',image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-112496-ss-usd-split-seat-black-01',description:'2026 new N160 SS family with 165cc 4-valve engine, ETB ride modes and 5-inch TFT console.'}
+ ,{name:'Dominar 400 2026 350cc',category:'sports',type:'2026 Updated Model',image:'https://bau-p-001.sitecorecontenthub.cloud/api/public/content/prod-147113-dominar-400-black-01',description:'Updated Dominar 400 with 349.13cc engine; confirm current variant and showroom availability.'}
+];
+
+const grid = document.getElementById("bikeGrid");
+const search = document.getElementById("bikeSearch");
+let activeFilter = "all";
+
+function renderBikes(){
+ const term = search.value.trim().toLowerCase();
+ const filtered = bikes.filter(b =>
+  (activeFilter === "all" || b.category === activeFilter) &&
+  (b.name.toLowerCase().includes(term) || b.type.toLowerCase().includes(term))
+ );
+
+ if(!filtered.length){
+  grid.innerHTML = '<div class="no-results">No bikes found. Try another search.</div>';
+  return;
+ }
+
+ grid.innerHTML = filtered.map(b => `
+  <article class="bike-card">
+   <div class="bike-photo">
+    <span class="bike-category">${b.type}</span>
+    <img src="${b.image}" alt="${b.name} Bajaj motorcycle"
+      loading="lazy"
+      onerror="this.onerror=null;this.src='https://placehold.co/700x450/f2f2f2/333?text=Bajaj+Motorcycle';">
+   </div>
+   <div class="bike-info">
+    <h3>${b.name}</h3>
+    <p>${b.description}</p>
+    <button class="details-btn" onclick="showBikeDetails(${bikes.indexOf(b)})">VIEW FULL DETAILS</button>
+    <div class="bike-actions">
+     <a class="btn btn-red" href="https://wa.me/917388850355?text=${encodeURIComponent('Hello SK Bajaj, I want details about '+b.name+'.')}" target="_blank" rel="noopener">ENQUIRE ↗</a>
+     <a class="btn btn-outline" href="tel:7388850355">CALL</a>
+    </div>
+   </div>
+  </article>
+ `).join("");
+}
+
+// Verified model-family specifications. Variant-specific hardware is marked for showroom confirmation.
+const specBook = [
+ {match:/Freedom 125/i,cc:'124.6 cc',power:'9.5 PS @ 8,000 rpm',torque:'9.7 Nm @ 5,000 rpm',gear:'6-speed',engine:'Single-cylinder, CNG + petrol',brakes:'Variant-dependent; confirm exact NG04 trim'},
+ {match:/Platina 100/i,cc:'99.59 cc',power:'8.2 PS @ 7,500 rpm',torque:'8.3 Nm @ 5,500 rpm',gear:'4-speed',engine:'Single-cylinder petrol',brakes:'Variant-dependent; confirm exact trim'},
+ {match:/Platina 110/i,cc:'115.06 cc',power:'9.5 PS @ 7,500 rpm',torque:'9.9 Nm @ 5,500 rpm',gear:'4-speed',engine:'Single-cylinder petrol',brakes:'Drum (listed variant)'},
+ {match:/Pulsar 125/i,cc:'124.38 cc',power:'11.8 PS @ 8,500 rpm',torque:'10.8 Nm @ 6,500 rpm',gear:'5-speed',engine:'Single-cylinder petrol',brakes:'Variant-dependent; confirm exact trim'},
+ {match:/Pulsar 150/i,cc:'149.5 cc',power:'14 PS @ 8,500 rpm',torque:'13.4 Nm @ 6,500 rpm',gear:'5-speed',engine:'Single-cylinder petrol',brakes:'Variant-dependent; confirm exact trim'},
+ {match:/220 F/i,cc:'220 cc',power:'20.9 PS @ 8,500 rpm',torque:'18.55 Nm @ 7,000 rpm',gear:'5-speed',engine:'Single-cylinder, oil-cooled',brakes:'Variant-dependent; confirm exact trim'},
+ {match:/RS 200/i,cc:'199.5 cc',power:'24.5 PS @ 9,750 rpm',torque:'18.7 Nm @ 8,000 rpm',gear:'6-speed',engine:'Single-cylinder, liquid-cooled',brakes:'Disc brakes; ABS specification confirm by variant'},
+ {match:/NS 200|NS200/i,cc:'199.5 cc',power:'25.5 PS (2026 update)',torque:'18.74 Nm (listed base spec)',gear:'6-speed',engine:'4-valve, liquid-cooled',brakes:'Confirm exact variant; 2026 update adds ETB ride modes and traction control'},
+ {match:/NS 160/i,cc:'160.3 cc',power:'17 PS @ 9,000 rpm',torque:'14.6 Nm @ 7,250 rpm',gear:'5-speed',engine:'Single-cylinder, oil-cooled',brakes:'Variant-dependent; confirm exact trim'},
+ {match:/N160/i,cc:'164.82 cc (current base) / 165 cc (2026 4V)',power:'16 PS (base) / 18.5 PS (2026 4V)',torque:'14.65 Nm (base); 2026 variant confirm',gear:'5-speed base; 2026 4V variant confirm',engine:'Single-cylinder; 2026 S/SS gets 4-valve engine',brakes:'Variant-dependent; confirm exact S/SS trim'},
+ {match:/NS 125|NS125/i,cc:'124.45 cc',power:'12 PS @ 8,500 rpm',torque:'11 Nm @ 7,000 rpm',gear:'5-speed',engine:'Single-cylinder petrol',brakes:'Variant-dependent; confirm exact trim'},
+ {match:/N125/i,cc:'124.59 cc',power:'12 PS @ 8,500 rpm',torque:'11 Nm @ 6,000 rpm',gear:'5-speed',engine:'Single-cylinder petrol',brakes:'Confirm exact variant'},
+ {match:/N250/i,cc:'249.07 cc',power:'24.5 PS (base) / 25 PS (2026 N250SS)',torque:'21.5 Nm (base) / 22 Nm (2026 N250SS)',gear:'5-speed base / 6-speed 2026 N250SS',engine:'2026 N250SS: 4-valve petrol engine',brakes:'ABS modes; confirm exact trim'},
+ {match:/Dominar 400/i,cc:'349.13 cc (2026 update)',power:'40.6 PS @ 9,000 rpm',torque:'33.2 Nm @ 7,500 rpm',gear:'6-speed',engine:'Single-cylinder, liquid-cooled',brakes:'Disc brakes with ABS; confirm exact trim'},
+ {match:/NS 400|NS400/i,cc:'349 cc (current listing)',power:'40.6 PS @ 9,000 rpm',torque:'33 Nm @ 7,500 rpm',gear:'6-speed',engine:'Single-cylinder, liquid-cooled',brakes:'Disc brakes with ABS; confirm exact trim'},
+ {match:/Chetak/i,cc:'Electric',power:'Electric motor; exact output by Chetak trim',torque:'Confirm by Chetak trim',gear:'Automatic',engine:'Electric scooter',brakes:'Confirm C3503 trim'}
+];
+function showBikeDetails(index){
+ const b=bikes[index]; if(!b)return;
+ const spec=specBook.find(x=>x.match.test(b.name))||{};
+ const rows=[['Engine / displacement',spec.cc||'Confirm with showroom'],['Maximum power',spec.power||'Confirm with showroom'],['Maximum torque',spec.torque||'Confirm with showroom'],['Gearbox / transmission',spec.gear||'Confirm with showroom'],['Engine / motor type',spec.engine||'Confirm with showroom'],['Brakes / ABS',spec.brakes||'Confirm with showroom'],['Suspension','Exact front & rear setup: confirm by variant'],['Tyres','Size and tubeless/radial type: confirm by variant'],['Fuel tank / battery','Capacity / range: confirm by variant'],['Colours','Current colour options: confirm with SK Bajaj']];
+ document.getElementById('detailsTitle').textContent=b.name;
+ document.getElementById('detailsGrid').innerHTML=rows.map(r=>`<div class="detail-item"><small>${r[0]}</small><strong>${r[1]}</strong></div>`).join('');
+ document.getElementById('detailsNote').textContent='Specifications are model-family references based on published Bajaj information where available. Exact figures and equipment can vary by model year and variant. Unpublished or variant-specific details are marked for confirmation. Price, stock and on-road offers should be confirmed directly with SK Bajaj, Nautanwa.';
+ document.getElementById('detailsWhatsApp').href='https://wa.me/917388850355?text='+encodeURIComponent('Hello SK Bajaj, please share latest price, stock and full specifications of '+b.name+'.');
+ document.getElementById('detailsModal').classList.add('open');
+}
+document.getElementById('detailsClose').addEventListener('click',()=>document.getElementById('detailsModal').classList.remove('open'));
+document.getElementById('detailsModal').addEventListener('click',e=>{if(e.target.id==='detailsModal')e.currentTarget.classList.remove('open')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('detailsModal').classList.remove('open')});
+
+search.addEventListener("input",renderBikes);
+
+document.querySelectorAll(".filter-btn").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  document.querySelectorAll(".filter-btn").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+  activeFilter=btn.dataset.filter;
+  renderBikes();
+ });
+});
+
+// Comparison selectors
+const selectOne=document.getElementById("bikeOne");
+const selectTwo=document.getElementById("bikeTwo");
+
+bikes.forEach((b,i)=>{
+ selectOne.add(new Option(b.name,i));
+ selectTwo.add(new Option(b.name,i));
+});
+selectTwo.selectedIndex=2;
+
+document.getElementById("compareBtn").addEventListener("click",()=>{
+ const output=document.getElementById("compareOutput");
+ if(selectOne.value==="" || selectTwo.value===""){
+  output.textContent="Please select two bikes to compare.";
+  return;
+ }
+ if(selectOne.value===selectTwo.value){
+  output.textContent="Please choose two different bikes.";
+  return;
+ }
+ const a=bikes[Number(selectOne.value)];
+ const b=bikes[Number(selectTwo.value)];
+ output.innerHTML=`
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px">
+   <div style="background:#f7f7f7;padding:17px;border-radius:5px">
+    <strong style="color:#e31837">${a.name}</strong>
+    <p>Category: ${a.type}</p>
+    <p>${a.description}</p>
+   </div>
+   <div style="background:#f7f7f7;padding:17px;border-radius:5px">
+    <strong style="color:#e31837">${b.name}</strong>
+    <p>Category: ${b.type}</p>
+    <p>${b.description}</p>
+   </div>
+  </div>
+  <p style="margin-top:13px">For exact specifications, variant differences and current prices, please contact the showroom.</p>
+ `;
+});
+
+// EMI calculator
+const price=document.getElementById("price");
+const down=document.getElementById("down");
+const rate=document.getElementById("rate");
+const months=document.getElementById("months");
+
+const money=n=>"₹"+Math.round(n).toLocaleString("en-IN");
+
+function calculateEMI(){
+ const p=Number(price.value);
+ const d=Math.min(Number(down.value),p);
+ const principal=p-d;
+ const annual=Number(rate.value);
+ const n=Number(months.value);
+ const r=annual/12/100;
+ const emi=r===0?principal/n:principal*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+ const total=emi*n;
+ const interest=total-principal;
+
+ document.getElementById("priceText").textContent=money(p);
+ document.getElementById("downText").textContent=money(d);
+ document.getElementById("rateText").textContent=annual+"%";
+ document.getElementById("monthsText").textContent=n+" Months";
+ document.getElementById("emiResult").textContent=money(emi);
+ document.getElementById("loanSummary").innerHTML=
+  "Loan amount: "+money(principal)+"<br>Total interest: "+money(interest)+"<br>Total repayment: "+money(total);
+}
+[price,down,rate,months].forEach(el=>el.addEventListener("input",calculateEMI));
+calculateEMI();
+
+// Mobile menu
+document.getElementById("menuBtn").addEventListener("click",()=>{
+ document.getElementById("navLinks").classList.toggle("open");
+});
+document.querySelectorAll("#navLinks a").forEach(a=>{
+ a.addEventListener("click",()=>document.getElementById("navLinks").classList.remove("open"));
+});
+
+// Scroll reveal animation
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+  if(entry.isIntersecting){
+   entry.target.classList.add("visible");
+   observer.unobserve(entry.target);
+  }
+ });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+document.getElementById("year").textContent=new Date().getFullYear();
+renderBikes();
+</script>
+</body>
+</html>
